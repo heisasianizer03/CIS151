@@ -115,6 +115,7 @@ public class Plane {
         String[] names = namesOfPassengers.split(",\\s+");
         String[] namesArray = new String[names.length];
         
+        System.out.print(this);
         for(int i = 0; i < names.length; i++){
             namesArray[i] = names[i];
         }
