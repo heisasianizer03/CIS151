@@ -112,8 +112,38 @@ public class ReservationSystem {
         return doneCancel;
     }
     public static void addGroup(Plane plane){
-            
-        plane.addGroupPassenger();
+        Scanner input = new Scanner(System.in);
+        boolean groupAdded = false;
+        
+        System.out.print("\nGroup name: ");
+        String groupName = input.nextLine();
+        
+        System.out.print("Service class: ");
+        String serviceClass = input.nextLine();
+        serviceClass = serviceClass.toLowerCase();
+        
+        System.out.print("Name: ");
+        String namesOfPassengers = input.nextLine();
+        
+        String[] names = namesOfPassengers.split(",\\s+");
+        String[] namesArray = new String[names.length];
+        
+        for(int i = 0; i < names.length; i++){
+            namesArray[i] = names[i];
+        }
+        
+        if(namesArray.length >= 2){
+            groupAdded = plane.addGroupPassenger(groupName, serviceClass, namesOfPassengers);
+            if(groupAdded == true){
+                System.out.println("Success");
+            }else{
+                System.out.println("Failed");
+            }
+        }else{
+            System.out.print("Group must be two or more members");
+            System.out.println();
+        }
+        
     }
     public static void cancelIndividual(Plane plane){
     }

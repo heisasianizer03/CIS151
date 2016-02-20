@@ -42,6 +42,14 @@ public class Seat {
         return seatNumber;
     }
     
+    /**
+     * Mutator method that set the seat preference of a passenger
+     * @param preferedSeat of a passenger seat (w - window, a - aisle, c - center)
+     */
+    //public void setSeatPreference(char preferedSeat){
+        //seatPreference = preferedSeat;
+    //}
+    
     /** String representation of Seat class
      *  @return seat information (passenger name, service class, group name, seat preference, )
      */
@@ -49,13 +57,6 @@ public class Seat {
         String seatString = passenger.passengerToString() + " " + 
             " " + getSeatNumber() + "\n";
         return seatString;
-    }
-    /**
-     * Mutator method that set the seat preference of a passenger
-     * @param preferedSeat of a passenger seat (w - window, a - aisle, c - center)
-     */
-    public void setSeatPreference(char preferedSeat){
-        seatPreference = preferedSeat;
     }
     
 }

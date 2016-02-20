@@ -8,21 +8,22 @@ import java.util.Arrays;
  * @author Paul
  */
 public class Plane {
-    public ArrayList<Seat> firstA;
-    public ArrayList<Seat> firstB;
-    public ArrayList<Seat> firstC;
-    public ArrayList<Seat> firstD;
+    public ArrayList<Seat> firstA;          //Window Seats A firstclass
+    public ArrayList<Seat> firstB;          //Aisle Seats B firstclass
+    public ArrayList<Seat> firstC;          //Aisle Seats C firstclass
+    public ArrayList<Seat> firstD;          //Windwo Seats D firstclass
     
-    public ArrayList<Seat> economyA;       //Window Seats I
-    public ArrayList<Seat> economyB;       //Center Seats I
-    public ArrayList<Seat> economyC;       //Aisle Seats I
-    public ArrayList<Seat> economyD;       //Aisle Seats II
-    public ArrayList<Seat> economyE;       //Center Seats II
-    public ArrayList<Seat> economyF;       //Window Seats II
+    public ArrayList<Seat> economyA;       //Window Seats A economy
+    public ArrayList<Seat> economyB;       //Center Seats B economy
+    public ArrayList<Seat> economyC;       //Aisle Seats C economy
+    public ArrayList<Seat> economyD;       //Aisle Seats D economy
+    public ArrayList<Seat> economyE;       //Center Seats E economy
+    public ArrayList<Seat> economyF;       //Window Seats F economy
     
     Scanner input = new Scanner(System.in);
     /**
-     * 
+     * Constructor that creates two ArrayList<Seats> for first class,
+     * and six ArrayList<Seats> for economy class
      */
     public Plane(){
         firstA = new ArrayList<Seat>();
@@ -37,7 +38,13 @@ public class Plane {
         economyE = new ArrayList<Seat>();
         economyF = new ArrayList<Seat>();
     }
-    /***/
+    /**
+     * Method that adds one passenger in the ArrayList depending on passenger's
+     * seat preference
+     * @param pass which has Passenger type that represents one passenger
+     * @param serviceClass preferred by the passenger (first class or economy)
+     * @param seatPreference represents the passenger's preferred seat (w-window, c-center, a-aisle)
+     */
     public void addOnePassenger(Passenger pass, String serviceClass, char seatPreference){
         String seatAvail = "";
         
@@ -96,53 +103,62 @@ public class Plane {
         }       
     }
     
-    /***/
-    public void addGroupPassenger(){
-        String seatAvail = "";
+    /**
+     * Method that reserves seats for a group (which has 2 <= seats left)
+     */
+    public boolean addGroupPassenger(String groupName, String serviceClass, String namesOfPassengers){
         char seatPreference = ' ';
-        String[] seatArray = {};
-        
-        System.out.print("\nGroup name: ");
-        String groupName = input.nextLine();
-        
-        System.out.print("Service class: ");
-        String serviceClass = input.nextLine();
-        serviceClass = serviceClass.toLowerCase();
-        
-        System.out.print("Name: ");
-        String namesOfPassengers = input.nextLine();
+        boolean groupAdded = false;
         
         String[] names = namesOfPassengers.split(",\\s+");
         String[] namesArray = new String[names.length];
         
-        System.out.print(this);
+       
         for(int i = 0; i < names.length; i++){
             namesArray[i] = names[i];
         }
         
+        String[] seatArray = new String[namesArray.length];
+        System.out.println("Enter before if 1");
         if(serviceClass.equals("first")){                                       //Reserve group in first class
             int currentSizeFirstClass = firstA.size() + firstB.size() + firstC.size() + firstD.size();
+            //System.out.println("Enter if 1");
             if(8 - currentSizeFirstClass >= namesArray.length){                    //There's enough seats for the entire group
                 for(int i = 0; i < namesArray.length; i++){
-                    
-                    //pass (name, serviceClass, groupName)
+                                //generateSeatGroup(serviceClas, passNumber)
+                    seatArray = generateSeatGroup(serviceClass, namesArray.length);
+                }
+                for(int i = 0; i < seatArray.length; i++){
+                    //System.out.println("SeatArray: " + seatArray[i]);
+                }
+                if(seatArray[0] != null){
+                    //System.out.println("Enter if 2");
+                    for(int i = 0; i < namesArray.length; i++){
+                      //pass (name, serviceClass, groupName)
                     Passenger pass = new Passenger(namesArray[i], serviceClass, groupName);
-                    seatAvail = generateSeatNumber(serviceClass, seatPreference);
-                    //seat (pass, seatPreference, seatNumber)
-                    Seat seat = new Seat(pass, seatPreference, seatAvail);
+                    Seat seat = new Seat(pass, seatPreference, seatArray[i]);
                     
-                    if(!isSectionFull(firstA, 2)){                                     //means firstA has more seat
+                    System.out.println("SeatArray: " + seatArray[i]);
+                    if(seatArray[i].charAt(1) == 'A'){
                         firstA.add(seat);
-                    }else if(isSectionFull(firstA, 2) && !isSectionFull(firstB, 2)){   //firstA is full, and firstB has more seats
+                        groupAdded = true;
+                    }else if(seatArray[i].charAt(1) == 'B'){
                         firstB.add(seat);
-                    }else if(isSectionFull(firstB, 2) && !isSectionFull(firstC, 2)){   //firstB is full, and firstC has more seats
+                        groupAdded = true;
+                    }else if(seatArray[i].charAt(1) == 'C'){
                         firstC.add(seat);
-                    }else if(isSectionFull(firstC, 2) && !isSectionFull(firstD, 2)){   //all is full except firstD
+                        groupAdded = true;
+                    }else if(seatArray[i].charAt(1) == 'D'){
                         firstD.add(seat);
-                    }  
+                        groupAdded = true;
+                    }
+                }
+                }else{
+                    groupAdded = false;
                 }
             }else{
-                System.out.println("No can do. There's only " + (8 - currentSizeFirstClass) + " seat/s left");                      
+                System.out.println("No can do. There's only " + (8 - currentSizeFirstClass) + " seat/s left"); 
+                groupAdded = false;
             }
         }else if(serviceClass.equals("economy")){                               //Reserve group in economy
             
@@ -155,7 +171,10 @@ public class Plane {
                     //String[]groupSeatsAvail = generateSeatGroup(serviceClass, namesArray.length);
                     seatArray = generateSeatGroup(serviceClass, namesArray.length);        
                 }
-                
+                System.out.println();
+                for(int i = 0; i < seatArray.length; i++){
+                    System.out.print("SeatArray: " + seatArray[i]);
+                }
                 //System.out.println("SeatArraylength " + seatArray.length);
                 //System.out.println("namesArraylength " + namesArray.length);
                 for(int i = 0; i < namesArray.length; i++){
@@ -185,10 +204,284 @@ public class Plane {
                 }
             }
         }
-        
+        return groupAdded;
     }
     
-    /**/
+     /** Private utility method that generate seat numbers for each passenger in the group
+      *  @param serviceClass chosen by the group
+      *  @param passNumber number of passengers in the group
+      *  @return String array of seats of which the group is going to be seated
+      */
+    private String[] generateSeatGroup(String serviceClass, int passNumber){
+        String[] seatArray = new String[passNumber];;
+        String seatNum = "";
+        String[] letterArr = {"A", "B", "C", "D", "E", "F"};
+        String closeArr = "";
+        
+        int aF = firstA.size();
+        int bF = firstB.size();
+        int cF = firstC.size();
+        int dF = firstD.size();
+        
+        int aE = economyA.size();
+        int bE = economyB.size();
+        int cE = economyC.size();
+        int dE = economyD.size();
+        int eE = economyE.size();
+        int fE = economyF.size();
+        
+        int smallest = aF;
+        int []array = new int[4];
+        int test = 1;
+        if(serviceClass.equals("first")){
+            
+           if(firstA.size() == firstB.size()){
+               if(firstA.size() == firstC.size() && passNumber > 2){
+                   if(firstA.size() == firstD.size() && passNumber > 3){
+                        closeArr = "ABCD";
+                        int temp = 0;
+                        System.out.println("Entering esel if ABCD");
+                        for(int i = 0; i < passNumber; i++){
+                            seatArray[i] = Integer.toString(firstA.size() + test) + letterArr[temp];
+                            temp++;
+                            if(i == 3){
+                                test++;
+                            }
+                            if(temp == 4){
+                                temp = 0;
+                            }
+                        } 
+                   }else if(firstA.size() == firstC.size() && passNumber == 3){
+                       System.out.println("Entering esel if ABC");
+                       closeArr = "ABC";
+                       int temp = 0;
+                       for(int i = 0; i < passNumber; i++){
+                           seatArray[i] = Integer.toString(firstA.size() + test) + letterArr[temp];
+                           temp++;
+                           if(i == 2){
+                               test++;
+                           }
+                           if(temp == 3){
+                               temp = 0;
+                           }
+                       }
+                   }
+               }else if(firstA.size() == firstB.size() && passNumber == 2){
+                   System.out.println("Entering esel if AB");
+                   closeArr = "AB";
+                   int temp = 0;
+                   for(int i = 0; i < passNumber; i++){
+                       seatArray[i] = Integer.toString(firstA.size() + test) + letterArr[temp];
+                       temp++;
+                       if(i == 1){
+                           test++;
+                       }
+                       if(temp == 2){
+                           temp = 0;
+                       }
+                   }
+               }
+           }else if(firstA.size() != firstB.size() && firstB.size() == firstC.size() &&  passNumber > 3){
+               if(firstB.size() == firstD.size() && passNumber > 2){
+                   System.out.println("Entering esel if BCD");
+                   closeArr = "BCD";
+                   int temp = 1;
+                   for(int i = 0; i < passNumber; i++){
+                       seatArray[i] = Integer.toString(firstB.size() + test) + letterArr[temp];
+                       temp++;
+                       if(i == 2){
+                           test++;
+                       }
+                       if(temp == 3){
+                           temp = 0;
+                       }
+                   }
+               }else if(firstB.size() == firstC.size() && firstA.size() != firstB.size() && firstC.size() != firstD.size()){
+                   closeArr = "BC";
+                   System.out.println("Entering esel if BC");
+                   int temp = 1;
+                   for(int i = 0; i < passNumber; i++){
+                       seatArray[i] = Integer.toString(firstB.size() + test) + letterArr[temp];
+                       temp++;
+                       if(i == 1){
+                           test++;
+                       }
+                       if(temp == 2){
+                           temp = 0;
+                       }
+                   }
+               }
+            }else if(firstB.size() != firstB.size() && firstC.size() == firstD.size() && passNumber == 2){
+               closeArr = "CD";
+               int temp = 2;
+               System.out.println("Entering esel if CD");
+               for(int i = 0; i < passNumber; i++){
+                    seatArray[i] = Integer.toString(firstC.size() + test) + letterArr[temp];
+                    temp++;
+                    if(i == 1){
+                        test++;
+                    }
+                    if(temp == 2){
+                       temp = 0;
+                    }
+                }
+            }else{
+                seatArray = null;
+            }
+           
+            
+    
+            
+            
+            
+            
+            
+        }else if(serviceClass.equals("economy")) {   
+            smallest = aF;
+            if(smallest > bE){
+                smallest = bE;
+            }else if(smallest > cE){
+                smallest = cE;
+            }else if(smallest > dE){
+                smallest = dE;
+            }else if(smallest > eE){
+                smallest = eE;
+            }else if(smallest > fE){
+                smallest = fE;
+            }
+            if(aE == smallest && aE == bE){
+                if(aE == cE){
+                    if(aE == dE){
+                        if(aE == eE){
+                            if(aE == fE){
+                                closeArr = "ABCDEF";
+                            }else{
+                                closeArr = "ABCDE";
+                            }
+                        }else{
+                            closeArr = "ABCD";
+                        }
+                    }else{
+                        closeArr = "ABC";
+                    }
+                }else{
+                    closeArr = "AB";
+                }
+            }else if(bE == smallest && bE == cE){
+                if(bE == dE){
+                    if(bE == eE){
+                        if(bE == fE){
+                            closeArr = "BCDEF";
+                        }else{
+                            closeArr = "BCDE";
+                        }
+                    }else{
+                        closeArr = "BCD";
+                    }
+                }else{
+                    closeArr = "BC";
+                }
+            }else if(cE == smallest && cE == dE){
+                if(cE == eE){
+                    if(cE == fE){
+                        closeArr = "CDEF";
+                    }else{
+                        closeArr = "CDE";
+                    }
+                }else{
+                    closeArr = "CD";
+                }  
+            }else if(dE == smallest && dE == eE){
+                if(dE == fE){
+                    closeArr = "DEF";
+                }else{
+                    closeArr = "CD";
+                }
+                }else if(eE == smallest && eE == fE){
+                    closeArr = "EF";
+            }else if(fE == smallest){
+            
+            }
+        }
+
+        return seatArray;
+    }
+    /***/
+    public String[] neighbors(char seat){
+        String [] neighbors = {};
+        
+        return neighbors;
+    }
+    /**
+     * Private utility method that generate a seat number for individual reservation
+     * This method is called in addOnePassenger()
+     * @param serviceClass chosen by the passenger
+     * @param seatPreference preferred by the passenger
+     * @return seatNum generated by this method
+     */
+    private String generateSeatNumber(String serviceClass, char seatPreference){
+        String seatNum = "";
+
+        if(serviceClass.equals("first")){
+            if(seatPreference == 'w'){
+                if(!isSectionFull(firstA, 2)){
+                    seatNum = Integer.toString(firstA.size() + 1) + "A";
+                }else if(firstD.size() < 2){
+                    seatNum = Integer.toString(firstD.size() + 1) + "D";
+                }
+            }else if(seatPreference == 'a'){
+                if(firstB.size() < 2){ 
+                    seatNum = Integer.toString(firstB.size() + 1) + "B";
+                }else if(firstC.size() < 2){
+                    seatNum = Integer.toString(firstC.size() + 1) + "C";
+                }
+            }else if(seatPreference == ' '){                                    //generate seatNumber for group only
+                if(!isSectionFull(firstA, 2)){                                  //means firstA has more seat
+                    seatNum = Integer.toString(firstA.size() + 1) + "A";
+                    System.out.println(seatNum);
+                }else if(isSectionFull(firstA, 2) && !isSectionFull(firstB, 2)){   //firstA is full, and firstB has more seats
+                    seatNum = Integer.toString(firstB.size() + 1) + "B";
+                    System.out.println(seatNum);
+                }else if(isSectionFull(firstB, 2) && !isSectionFull(firstC, 2)){   //firstB is full, and firstC has more seats
+                    seatNum = Integer.toString(firstC.size() + 1) + "C";
+                    System.out.println(seatNum);
+                }else if(isSectionFull(firstC, 2) && !isSectionFull(firstD, 2)){   //all is full except firstD
+                    seatNum = Integer.toString(firstD.size() + 1) + "D";
+                    System.out.println(seatNum);
+                }
+            }
+        }else if(serviceClass.equals("economy")){
+            if(seatPreference == 'w'){                                      //Window seats
+                if(economyA.size() < 3){
+                    seatNum = Integer.toString(economyA.size() + 10) + "A";
+                }else if(economyF.size() < 3){
+                    seatNum = Integer.toString(economyF.size() + 10) + "F";
+                }
+            }else if(seatPreference == 'a'){                                //Aisle seats
+                if(economyC.size() < 3){ 
+                    seatNum = Integer.toString(economyC.size() + 10) + "C";
+                }else if(economyD.size() < 3){
+                    seatNum = Integer.toString(economyD.size() + 10) + "D";
+                }
+            }else if(seatPreference == 'c'){                                //Center seats
+                if(economyB.size() < 3){ 
+                    seatNum = Integer.toString(economyB.size() + 10) + "B";
+                }else if(economyE.size() < 3){
+                    seatNum = Integer.toString(economyE.size() + 10) + "E";
+                }
+            }else if(seatPreference == ' '){                                //generate seatNumber for group only 
+            }                
+        }
+     return seatNum;
+    }
+    
+    /**
+     * Method that cancels reservation for both individual cancellation or group cancellation
+     * @param name of the passenger to be canceled
+     * @param serviceClass of the passenger or group to be canceled
+     * @param type if the type of cancellation is individual or group cancellation
+     * @return done (true if cancellation is successful false otherwise )
+     */
     public boolean cancelReservation(String name, String serviceClass, String groupName, char type){
         boolean done = false;
         Passenger pass = new Passenger(name, serviceClass, groupName);
@@ -330,7 +623,9 @@ public class Plane {
         }
         return done;
     }
-    /***/
+    /**
+     * Method that displays the available seats in the plane
+     */
     public void printAvailSeats(){
         String firstArray1 = "";
         String firstArray2 = "";
@@ -424,6 +719,8 @@ public class Plane {
         System.out.println();
     }
     
+    /** Method that displays the plane manifest
+     */
     public void printPlaneManifest(){
         String firstArray1 = "";
         String firstArray2 = "";
@@ -535,154 +832,22 @@ public class Plane {
         
         System.out.println();
     }
-    /***/
-    private String generateSeatNumber(String serviceClass, char seatPreference){
-        String seatNum = "";
 
-        if(serviceClass.equals("first")){
-            if(seatPreference == 'w'){
-                if(!isSectionFull(firstA, 2)){
-                    seatNum = Integer.toString(firstA.size() + 1) + "A";
-                }else if(firstD.size() < 2){
-                    seatNum = Integer.toString(firstD.size() + 1) + "D";
-                }
-            }else if(seatPreference == 'a'){
-                if(firstB.size() < 2){ 
-                    seatNum = Integer.toString(firstB.size() + 1) + "B";
-                }else if(firstC.size() < 2){
-                    seatNum = Integer.toString(firstC.size() + 1) + "C";
-                }
-            }else if(seatPreference == ' '){                                    //generate seatNumber for group only
-                if(!isSectionFull(firstA, 2)){                                  //means firstA has more seat
-                    seatNum = Integer.toString(firstA.size() + 1) + "A";
-                    System.out.println(seatNum);
-                }else if(isSectionFull(firstA, 2) && !isSectionFull(firstB, 2)){   //firstA is full, and firstB has more seats
-                    seatNum = Integer.toString(firstB.size() + 1) + "B";
-                    System.out.println(seatNum);
-                }else if(isSectionFull(firstB, 2) && !isSectionFull(firstC, 2)){   //firstB is full, and firstC has more seats
-                    seatNum = Integer.toString(firstC.size() + 1) + "C";
-                    System.out.println(seatNum);
-                }else if(isSectionFull(firstC, 2) && !isSectionFull(firstD, 2)){   //all is full except firstD
-                    seatNum = Integer.toString(firstD.size() + 1) + "D";
-                    System.out.println(seatNum);
-                }
-            }
-        }else if(serviceClass.equals("economy")){
-            if(seatPreference == 'w'){                                      //Window seats
-                if(economyA.size() < 3){
-                    seatNum = Integer.toString(economyA.size() + 10) + "A";
-                }else if(economyF.size() < 3){
-                    seatNum = Integer.toString(economyF.size() + 10) + "F";
-                }
-            }else if(seatPreference == 'a'){                                //Aisle seats
-                if(economyC.size() < 3){ 
-                    seatNum = Integer.toString(economyC.size() + 10) + "C";
-                }else if(economyD.size() < 3){
-                    seatNum = Integer.toString(economyD.size() + 10) + "D";
-                }
-            }else if(seatPreference == 'c'){                                //Center seats
-                if(economyB.size() < 3){ 
-                    seatNum = Integer.toString(economyB.size() + 10) + "B";
-                }else if(economyE.size() < 3){
-                    seatNum = Integer.toString(economyE.size() + 10) + "E";
-                }
-            }else if(seatPreference == ' '){                                //generate seatNumber for group only 
-            }                
-        }
-     return seatNum;
-    }
-    /***/
-    private String[] generateSeatGroup(String serviceClass, int passNumber){
-        String[] seatArray = new String[passNumber];;
-        String seatNum = "";
-        String[] letterArr = {"A", "B", "C", "D", "E", "F"};
-        String closeArr = "";
-        
-        int a = economyA.size();
-        int b = economyB.size();
-        int c = economyC.size();
-        int d = economyD.size();
-        int e = economyE.size();
-        int f = economyF.size();
-        
-        int smallest = a;
-        
-        if(smallest > b){
-            smallest = b;
-        }else if(smallest > c){
-            smallest = c;
-        }else if(smallest > d){
-            smallest = d;
-        }else if(smallest > e){
-            smallest = e;
-        }else if(smallest > f){
-            smallest = f;
-        }
-       
-        if(a == smallest && a == b){
-            if(a == c){
-                if(a == d){
-                    if(a == e){
-                        if(a == f){
-                            closeArr = "ABCDEF";
-                        }else{
-                            closeArr = "ABCDE";
-                        }
-                    }else{
-                        closeArr = "ABCD";
-                    }
-                }else{
-                    closeArr = "ABC";
-                }
-            }else{
-                closeArr = "AB";
-            }
-        }else if(b == smallest && b == c){
-            if(b == d){
-                if(b == e){
-                    if(b == f){
-                        closeArr = "BCDEF";
-                    }else{
-                        closeArr = "BCDE";
-                    }
-                }else{
-                    closeArr = "BCD";
-                }
-            }else{
-                closeArr = "BC";
-            }
-        }else if(c == smallest && c == d){
-            if(c == e){
-                if(c == f){
-                    closeArr = "CDEF";
-                }else{
-                    closeArr = "CDE";
-                }
-            }else{
-                closeArr = "CD";
-            }  
-        }else if(d == smallest && d == e){
-            if(d == f){
-                closeArr = "DEF";
-            }else{
-                closeArr = "CD";
-            }
-        }else if(e == smallest && e == f){
-            closeArr = "EF";
-        }else if(f == smallest){
-            
-        }
-        
-        return seatArray;
-    }
-    /***/
+    /**
+     * Method String representation of ArrayList<Seats> 
+     * @param seat that needed to be printed
+     */
     public void toStringArray(ArrayList<Seat> seat){
         for(Seat s: seat){
             System.out.print(s.seatToString());
         }
     }
     
-    /***/
+    /** Method that checks if a section in the plane (which is an ArrayList) is full
+     *  @param seat that needs checking if it is full or not
+     *  @param capacity which is the same thing as the number of seats available
+     *  return true if section is full, false otherwise 
+     */
     private boolean isSectionFull(ArrayList<Seat> seat, int capacity){
         if(seat.size() >= capacity){
             return true;
