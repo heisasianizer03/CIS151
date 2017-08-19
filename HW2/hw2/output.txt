@@ -1,0 +1,194 @@
+   March 2016 
+Su Mo Tu We Th Fr Sa
+       1  2  3  4  5 
+ 6  7  8  9 10 11 12 
+13 14 15 16 17 18[19]
+20 21 22 23 24 25 26 
+27 28 29 30 31 
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit:
+
+No single event has ever created.
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit: 
+
+Done Loading
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit: 
+
+2016
+ Saturday March 19 1:00 - 2:00 Submit hw2
+2016
+ Sunday April 10 9:00 - 10:00 My Birthday
+ Sunday April 10 12:00 - 1:00 Big Dinner
+2016
+ Wednesday May 25 9:00 - 10:00 Get A+
+2016
+ Sunday June 5 1:00 - 2:00 Fly Manila
+2016
+ Friday July 1 11:00 - 11:00 Internship
+2016
+ Wednesday November 23 10:00 - 1:00 Visit FL
+
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit:
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit: v
+
+[D]ay view [M]onth view: 
+
+March 19, 2016
+Event(s): 
+1. Submit hw2 from: 1:00 to: 2:00
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit: 
+
+[D]ay view [M]onth view: 
+
+   March 2016 
+Su Mo Tu We Th Fr Sa
+       1  2  3  4  5 
+ 6  7  8  9 10 11 12 
+13 14 15 16 17 18 19 
+20 21 22 23 24 25 26 
+27 28 29 30 31 
+
+Event(s):
+Submit hw2 March 19, 2016
+[P]revious [N]ext [M]ain menu?: 
+
+Event(s):
+My Birthday April 10, 2016
+Big Dinner April 10, 2016
+
+
+[P]revious [N]ext [M]ain menu?: 
+
+Event(s):
+Get A+ May 25, 2016
+
+[P]revious [N]ext [M]ain menu?: 
+
+Event(s):
+Fly Manila June 5, 2016
+
+[P]revious [N]ext [M]ain menu?: 
+
+Event(s):
+Internship July 1, 2016
+
+[P]revious [N]ext [M]ain menu?: 
+
+Event(s):
+Fly Manila June 5, 2016
+
+[P]revious [N]ext [M]ain menu?: 
+
+Event(s):
+Get A+ May 25, 2016
+
+[P]revious [N]ext [M]ain menu?: 
+
+Event(s):
+Fly Manila June 5, 2016
+
+[P]revious [N]ext [M]ain menu?: 
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit: 
+
+Enter date (MM/DD/YYYY): 
+
+April 10, 2016
+Event(s):
+1. My Birthday from: 9:00 to: 10:00
+2. Big Dinner from: 12:00 to: 1:00
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit: 
+
+[S]elected [A]ll: 
+Enter date (MM/DD/YYYY): 
+
+Delete failed or event doesn't exists.
+
+[S]elected [A]ll: 
+Enter date (MM/DD/YYYY): 
+
+Event(s) on May 25, 2016 deleted.
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit: 
+
+2016
+ Saturday March 19 1:00 - 2:00 Submit hw2
+2016
+ Sunday April 10 9:00 - 10:00 My Birthday
+ Sunday April 10 12:00 - 1:00 Big Dinner
+2016
+ Sunday June 5 1:00 - 2:00 Fly Manila
+2016
+ Friday July 1 11:00 - 11:00 Internship
+2016
+ Wednesday November 23 10:00 - 1:00 Visit FL
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit: 
+
+[S]elected [A]ll: 
+
+All events are deleted.
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit: 
+
+No single event has ever created.
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit:
+
+Enter date (MM/DD/YYYY):
+Event name:
+Start time (1300 is 1:00): 
+End time (1300 is 1:00):
+
+Thursday, June 8, 2017
+Marry Best Friend 12:00 - 11:00
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit:
+
+2017
+ Thursday June 8 12:00 - 11:00 Marry Best Friend
+
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit:
+
+Enter date (MM/DD/YYYY): 
+Event name:
+Start time (1300 is 1:00):
+End time (1300 is 1:00):
+
+Saturday, March 19, 2016
+Submit HW 10:00 - 11:00
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit:
+
+2016
+ Saturday March 19 10:00 - 11:00 Submit HW
+2017
+ Thursday June 8 12:00 - 11:00 Marry Best Friend
+
+Select one of the following options
+[L]oad [V]iew [C]reate [G]o [E]vent list [D]elete [Q]uit:
+
+Good bye.
+Programmed by: Paul Diaz
